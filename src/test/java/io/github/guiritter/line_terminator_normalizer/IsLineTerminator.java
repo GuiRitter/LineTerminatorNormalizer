@@ -8,10 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
 
-public class IsLineTerminator {
+public final class IsLineTerminator {
 	
 	@Test
-	public void test() throws IOException {
+	public final void test() throws IOException {
 		assertEquals(true, isLineTerminator(LINE_BREAK));
 		assertEquals(true, isLineTerminator(CARRIAGE_RETURN));
 		assertEquals(false, isLineTerminator("a".charAt(0)));

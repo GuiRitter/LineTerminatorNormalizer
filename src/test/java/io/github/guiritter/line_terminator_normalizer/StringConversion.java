@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.IOException;
 import org.junit.jupiter.api.Test;
 
-public class StringConversion {
+public final class StringConversion {
 	
 	@Test
 	public void test() throws IOException {

@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import org.junit.jupiter.api.Test;
 
-public class UsesWhichTerminator {
+public final class UsesWhichTerminator {
 	
 	@Test
 	public void usesWhichTerminator() throws IOException {

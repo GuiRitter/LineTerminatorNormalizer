@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import org.junit.jupiter.api.Test;
 
-public class ReadAllLinesConsumesTerminator {
+public final class ReadAllLinesConsumesTerminator {
 	
 	@Test
 	public void readAllLinesConsumesTerminator() throws IOException {
