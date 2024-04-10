@@ -1,0 +1,159 @@
+last character read, character read, first line terminator
+
+all possible states for the character processor before it begins processing
+impossible or duplicate states have been crossed out
+assuming files will use the same line terminator through out: \n, \r\n or \r
+
+-1,\n,-1
+-1,\n,\n x
+-1,\n,\r x
+-1,\r,-1
+-1,\r,\n x
+-1,\r,\r x
+-1,48,-1
+-1,48,\n x
+-1,48,\r x
+-1,49,-1 x
+-1,49,\n x
+-1,49,\r x
+\n,\n,-1 x
+\n,\n,\n
+\n,\n,\r x
+\n,\r,-1 x
+\n,\r,\n x
+\n,\r,\r
+\n,48,-1 x
+\n,48,\n
+\n,48,\r
+\n,49,-1 x
+\n,49,\n x
+\n,49,\r x
+\r,\n,-1 x
+\r,\n,\n x
+\r,\n,\r
+\r,\r,-1 x
+\r,\r,\n x
+\r,\r,\r
+\r,48,-1 x
+\r,48,\n x
+\r,48,\r
+\r,49,-1 x
+\r,49,\n x
+\r,49,\r x
+48,\n,-1
+48,\n,\n
+48,\n,\r x
+48,\r,-1
+48,\r,\n x
+48,\r,\r
+48,48,-1
+48,48,\n
+48,48,\r
+48,49,-1
+48,49,\n
+48,49,\r
+49,\n,-1 x
+49,\n,\n x
+49,\n,\r x
+49,\r,-1 x
+49,\r,\n x
+49,\r,\r x
+49,48,-1 x
+49,48,\n x
+49,48,\r x
+49,49,-1 x
+49,49,\n x
+49,49,\r x
+
+\r\n
+
+-1,\n,-1 x
+-1,\r,-1
+-1,48,-1
+\n,\n,\n x
+\n,\r,\r
+\n,48,\n x
+\n,48,\r
+\r,\n,\r
+\r,\r,\r x
+\r,48,\r x
+48,\n,-1 x
+48,\n,\n x
+48,\r,-1
+48,\r,\r
+48,48,-1
+48,48,\n x
+48,48,\r
+48,49,-1
+48,49,\n x
+48,49,\r
+
+realized some omitted states were necessary after all
+felt like restoring more states but realized they would be functionally the same so it made sense to omit them from the beginnning
+
+-1,\r,-1
+-1,48,-1
+\n,\r,\r
+\n,48,\r
+\r,\n,\r
+48,\r,-1
+48,\r,\r
+48,48,-1
+48,48,\r
+48,49,-1
+48,49,\r
+49,\r,-1
+49,48,-1
+49,48,\r
+
+0 \r\nAAA\r\nABA\r\n\r\nAABAA\r\nA\r\n
+1 AAAB\r\n
+2 ABABAA\r\n
+3 A\r\n
+4 ABA\r\n
+
+\n
+
+-1,\n,-1
+-1,48,-1
+\n,\n,\n
+\n,48,\n
+48,\n,-1
+48,\n,\n
+48,48,-1
+48,48,\n
+48,49,-1
+48,49,\n
+
+\r
+
+here I included all the states because it was not much more
+
+-1,\r,-1
+-1,48,-1
+-1,49,-1
+\r,\r,\r
+\r,48,\r
+\r,49,\r
+48,\r,-1
+48,\r,\r
+48,48,-1
+48,48,\r
+48,49,-1
+48,49,\r
+49,\r,-1
+49,\r,\r
+49,48,-1
+49,48,\r
+49,49,-1
+49,49,\r
+
+0 AAABABBBAA\rAAA\rA\rBABAABBB\rB\rBBA\r\r\rAB\r\rB\rA\r\r
+1 AB\rB
+2 A\r\r
+3 BA\rB
+4 BB\r
+5 B\r
+6 \r\r
+7 \rA
+8 \rB
