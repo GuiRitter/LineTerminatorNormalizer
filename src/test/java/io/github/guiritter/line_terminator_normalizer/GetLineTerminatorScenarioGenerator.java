@@ -31,7 +31,7 @@ public final class GetLineTerminatorScenarioGenerator {
 		return Paths.get(rootPath + "\\r n " + (index++) + ".txt");
 	}
 
-	public void generateSingle(String lineTerminator) throws IOException {
+	public final void generateSingle(String lineTerminator) throws IOException {
 		int index = 0;
 
 		var writer = newBufferedWriter(generateSinglePath(ROOT_PATH, lineTerminator, index++), CREATE, TRUNCATE_EXISTING);
@@ -103,13 +103,13 @@ public final class GetLineTerminatorScenarioGenerator {
 	}
 
 	// @Test
-	public void generate() throws IOException {
+	public final void generate() throws IOException {
 		generateSingle(LINE_BREAK_STRING);
 		generateSingle(CARRIAGE_RETURN_STRING);
 	}
 
 	@Test
-	public void generateCombination() throws IOException {
+	public final void generateCombination() throws IOException {
 		int index = 0;
 
 		var writer = newBufferedWriter(generateCombinationPath(ROOT_PATH, index++), CREATE, TRUNCATE_EXISTING);

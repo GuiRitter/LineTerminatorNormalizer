@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public final class LineAmount {
 	
 	@Test
-	public void lineAmount() throws IOException {
+	public final void lineAmount() throws IOException {
 		var file = new File("C:\\desenvolvimento\\Java\\LineTerminatorNormalizer\\src\\main\\resources\\transaction_type_enum.dart");
 
 		var lineList = Files.readAllLines(file.toPath());

@@ -1,23 +1,30 @@
 package io.github.guiritter.line_terminator_normalizer;
 
+import static java.lang.System.out;
 import static java.nio.file.Files.newBufferedReader;
-import static java.nio.file.Files.newBufferedWriter;
-import static java.nio.file.StandardOpenOption.CREATE;
-import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
+import static java.nio.file.Files.newInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import static java.lang.System.out;
 
 public final class LineTerminatorNormalizer {
 
 	public static final int LINE_BREAK = 10;
+	public static final int[] LINE_BREAK_ARRAY = new int[] { LINE_BREAK };
+
 	public static final int CARRIAGE_RETURN = 13;
+	public static final int[] CARRIAGE_RETURN_ARRAY = new int[] { CARRIAGE_RETURN };
+	
+	public static final int[] COMBINATION_ARRAY = new int[] { CARRIAGE_RETURN, LINE_BREAK };
+	
+	public static final int[] NO_ARRAY = new int[0];
 
 	public static final String DESIRED_FILE_EXTENSION = ".dart";
 
@@ -25,7 +32,7 @@ public final class LineTerminatorNormalizer {
 
 	public static final String REFERENCE_FOLDER = "C:\\desenvolvimento\\Flutter\\project_ref\\src";
 
-	public static final Map<String, String> REFERENCE_MAP = new HashMap<>();
+	public static final Map<String, int[]> REFERENCE_MAP = new HashMap<>();
 
 	public static final String ROOT_FOLDER = "C:\\desenvolvimento\\Flutter\\project_merge\\src";
 	
@@ -33,7 +40,7 @@ public final class LineTerminatorNormalizer {
 		return key.substring(prefix.length());
 	}
 
-	public static final String getLineTerminator(File file) throws IOException {
+	public static final int[] getLineTerminator(File file) throws IOException {
 		boolean hasLN = false;
 		boolean hasCR = false;
 
@@ -47,7 +54,7 @@ public final class LineTerminatorNormalizer {
 
 				if (hasLN) {
 					reader.close();
-					return "\n";
+					return LINE_BREAK_ARRAY;
 				} else {
 					hasLN = true;
 				}
@@ -55,7 +62,7 @@ public final class LineTerminatorNormalizer {
 
 				if (hasCR) {
 					reader.close();
-					return "\r";
+					return CARRIAGE_RETURN_ARRAY;
 				} else {
 					hasCR = true;
 				}
@@ -63,24 +70,24 @@ public final class LineTerminatorNormalizer {
 
 			if (hasLN && hasCR) {
 				reader.close();
-				return "\r\n";
+				return COMBINATION_ARRAY;
 			}
 		}
 
 		reader.close();
 
 		if (hasLN) {
-			return "\n";
+			return LINE_BREAK_ARRAY;
 		}
 
 		if (hasCR) {
-			return "\r";
+			return CARRIAGE_RETURN_ARRAY;
 		}
 
-		return "";
+		return NO_ARRAY;
 	}
 
-	private static final String getReference(String rootFolder, String filePath) {
+	private static final int[] getReference(String rootFolder, String filePath) {
 		return REFERENCE_MAP.get(getKeyWithoutPrefix(rootFolder, filePath));
 	}
 
@@ -101,28 +108,27 @@ public final class LineTerminatorNormalizer {
 		processFolder(rootFolder, fileExtension);
 	}
 
-	public static final void processFile(String inputPath, String outputPath, String chosenLineTerminator) throws IOException {
+	public static final void processFile(String inputPath, String outputPath, int[] chosenLineTerminator) throws IOException {
 		var file = new File(inputPath);
 
-		var reader = newBufferedReader(file.toPath());
+		var reader = newInputStream(file.toPath());
 
-		var builder = new StringBuilder((int) file.length());
+		var array = new ArrayList<Integer>((int) Math.min(1l, Integer.MAX_VALUE));
 
 		int character;
 
 		var characterProcessor = new CharacterProcessor(chosenLineTerminator);
 
 		while ((character = reader.read()) > -1) {
-			builder.append(characterProcessor.getCharToWrite(character));
+			characterProcessor.writeChar(character, array);
 		}
 
 		reader.close();
 
-		var codePointStream = builder.codePoints();
+		// var writer = newBufferedWriter(Paths.get(outputPath), CREATE, TRUNCATE_EXISTING);
+		var writer = new FileOutputStream(new File(outputPath));
 
-		var writer = newBufferedWriter(Paths.get(outputPath), CREATE, TRUNCATE_EXISTING);
-
-		codePointStream.forEach(codePoint -> {
+		array.forEach(codePoint -> {
 			try {
 				writer.write(codePoint);
 			} catch (IOException e) {}
@@ -150,8 +156,7 @@ public final class LineTerminatorNormalizer {
 						if (referenceLineTerminator != null) {
 
 							var currentLineTerminator = getLineTerminator(fFile);
-
-							if ((currentLineTerminator != null) && (referenceLineTerminator.compareTo(currentLineTerminator) != 0)) {
+							if ((currentLineTerminator != null) && (!Arrays.equals(referenceLineTerminator, currentLineTerminator))) {
 
 								processFile(fFile.getAbsolutePath(), fFile.getAbsolutePath(), referenceLineTerminator);
 							}
@@ -204,7 +209,7 @@ public final class LineTerminatorNormalizer {
 		traverseFolder(referenceFolder, fileProcessor);
 	}
 
-	private static final void putReference(String rootFolder, String filePath, String value) {
+	private static final void putReference(String rootFolder, String filePath, int[] value) {
 		REFERENCE_MAP.put(getKeyWithoutPrefix(rootFolder, filePath), value);
 	}
 

@@ -31,7 +31,7 @@ public final class GetLineTerminator {
 		return Paths.get(rootPath + "\\r n " + (index++) + ".txt");
 	}
 
-	public void testSingle(String lineTerminator) throws IOException {
+	public final void testSingle(String lineTerminator) throws IOException {
 		File file;
 
 		for (int index = 0; index < 6; index++) {
@@ -42,13 +42,13 @@ public final class GetLineTerminator {
 	}
 
 	@Test
-	public void testBothSingle() throws IOException {
+	public final void testBothSingle() throws IOException {
 		testSingle(LINE_BREAK_STRING);
 		testSingle(CARRIAGE_RETURN_STRING);
 	}
 
 	@Test
-	public void testCombination() throws IOException {
+	public final void testCombination() throws IOException {
 		
 		File file;
 

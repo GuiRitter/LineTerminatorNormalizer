@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 public final class UsesWhichTerminator {
 	
 	@Test
-	public void usesWhichTerminator() throws IOException {
+	public final void usesWhichTerminator() throws IOException {
 		var file = new File("C:\\desenvolvimento\\Flutter\\project_merge\\src\\enum\\transaction_type_enum.dart");
 
 		var reader = Files.newBufferedReader(file.toPath());

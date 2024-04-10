@@ -8,7 +8,7 @@ import static io.github.guiritter.line_terminator_normalizer.LineTerminatorNorma
 public final class GetKeyWithoutPrefix {
 
 	@Test
-	public void test() {
+	public final void test() {
 		assertEquals(
 			"\\src\\enum\\transaction_type_enum.dart",
 			getKeyWithoutPrefix(

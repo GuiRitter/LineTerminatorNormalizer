@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public final class ReadAllLinesConsumesTerminator {
 	
 	@Test
-	public void readAllLinesConsumesTerminator() throws IOException {
+	public final void readAllLinesConsumesTerminator() throws IOException {
 		var file = new File("C:\\desenvolvimento\\Java\\LineTerminatorNormalizer\\src\\main\\resources\\transaction_type_enum.dart");
 
 		var lineList = Files.readAllLines(file.toPath());

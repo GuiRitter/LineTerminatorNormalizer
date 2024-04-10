@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public final class StringConversion {
 	
 	@Test
-	public void test() throws IOException {
+	public final void test() throws IOException {
 		assertEquals("\n", new String(new int[]{ LINE_BREAK }, 0, 1));
 		assertEquals("\r", new String(new int[]{ CARRIAGE_RETURN }, 0, 1));
 		assertEquals("\r\n", new String(new int[]{ CARRIAGE_RETURN, LINE_BREAK }, 0, 2));

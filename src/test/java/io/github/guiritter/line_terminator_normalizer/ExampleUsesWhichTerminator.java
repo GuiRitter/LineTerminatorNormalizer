@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 public final class ExampleUsesWhichTerminator {
 	
 	@Test
-	public void exampleUsesWhichTerminator() throws IOException {
+	public final void exampleUsesWhichTerminator() throws IOException {
 		var file = new File("C:\\desenvolvimento\\Java\\LineTerminatorNormalizer\\src\\main\\resources\\transaction_type_enum.dart");
 
 		var reader = Files.newBufferedReader(file.toPath());
